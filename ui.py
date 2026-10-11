@@ -1,10 +1,3 @@
-"""
-Discord Token Retriever — UI Engine
-Styled with rich gradients, box drawing, and terminal aesthetics inspired by GhoSty OwO V4.1.
-
-Author: @jijaghosty • Async Development
-"""
-
 import sys
 import os
 import re
@@ -13,7 +6,6 @@ import ctypes
 import subprocess
 import time
 
-# Reconfigure standard output for UTF-8 compatibility
 if hasattr(sys.stdout, 'reconfigure'):
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -26,7 +18,6 @@ if hasattr(sys.stderr, 'reconfigure'):
         pass
 
 def _enable_windows_vt():
-    """Enable Windows 10+ Virtual Terminal Sequences for ANSI escape code support."""
     if os.name == 'nt':
         try:
             kernel32 = ctypes.windll.kernel32
@@ -39,14 +30,10 @@ def _enable_windows_vt():
             pass
 
 _enable_windows_vt()
-
-# ANSI Style Constants
 RESET  = "\033[0m"
 BOLD   = "\033[1m"
 DIM    = "\033[2m"
 ITALIC = "\033[3m"
-
-# Curated RGB Color Palette (Matching GhoSty OwO V4.1 Theme)
 CYAN_ELECTRIC = (0, 245, 255)
 CYAN_MID      = (0, 195, 255)
 BLUE_ELECTRIC = (30, 144, 255)
@@ -161,8 +148,6 @@ def colorize_gradient(text: str, colors: list = None) -> str:
 def make_badge(text: str, bg_tuple: tuple, fg_tuple: tuple = (0, 0, 0), width: int = 10) -> str:
     padded = f" {text} ".center(width)
     return f"{bg_rgb(*bg_tuple)}{fg_rgb(*fg_tuple)}{BOLD}{padded}{RESET}"
-
-# Banner Logo copied exactly from GhoSty OwO V4.1 reference file
 LOGO_GHOSTY_OWO = [
     '   ▄▄▄▄▄▄ ▄▄▄            ▄▄▄▄▄             ',
     ' ██▀▀  ▀█  ██           ▄██ ▀█  ▄█         ',
@@ -180,13 +165,10 @@ def render_header(device_id: str = None, width: int = None):
 
     lines_out = [""]
     
-    # 1. Gradient ASCII Banner (exact copy from reference)
     grad_colors = [CYAN_ELECTRIC, (45, 190, 255), BLUE_ELECTRIC, PURPLE_NEON]
     banner_grad = [colorize_gradient(l, grad_colors) for l in LOGO_GHOSTY_OWO]
     lines_out.extend(center_block(banner_grad, width))
     lines_out.append("")
-
-    # 2. Version & Brand Tag
     v_tag = (
         f"{fg_rgb(*CYAN_MID)}{BOLD}GhoSty Token Retriever{RESET} "
         f"{fg_rgb(*GRAY_MUTED)}•{RESET} {fg_rgb(*PURPLE_LIGHT)}Safe Alpha Build V2{RESET} "
@@ -194,8 +176,6 @@ def render_header(device_id: str = None, width: int = None):
     )
     lines_out.append(center(v_tag, width))
     lines_out.append("")
-
-    # 3. Environment & Configuration Matrix
     box_w = min(width - 4, 82)
     if box_w < 64:
         box_w = 64
@@ -241,8 +221,6 @@ def render_header(device_id: str = None, width: int = None):
 
     lines_out.append(bot_border)
     lines_out.append("")
-
-    # 4. Author Attribution
     author_line = (
         f"{fg_rgb(*GRAY_MUTED)}< Made With {RESET}{fg_rgb(*RED_CRIMSON)}❤️{RESET}{fg_rgb(*GRAY_MUTED)} in India By {RESET}"
         f"{fg_rgb(*CYAN_MID)}{BOLD}@jijaghosty{RESET}{fg_rgb(*GRAY_MUTED)} • {RESET}"
@@ -251,7 +229,6 @@ def render_header(device_id: str = None, width: int = None):
     lines_out.append(center(author_line, width))
     lines_out.append("")
 
-    # 5. Section Divider for Pipeline Logs
     div_title = f" {BOLD}{fg_rgb(*CYAN_ELECTRIC)}[ AUTHENTICATION PIPELINE ]{RESET} "
     div_plain_len = len(strip_ansi(div_title))
     left_line_len = 4
@@ -302,7 +279,6 @@ def log_support_prompt(width: int = None):
     print("")
 
 def prompt_input(label: str) -> str:
-    """Styled input prompt with badge and clean styling."""
     badge = make_badge("INPUT", (0, 245, 255), (0, 0, 0), width=11)
     arrow = f"{fg_rgb(*CYAN_ELECTRIC)}───›{RESET}"
     prompt_str = f"   {badge} {arrow} {fg_rgb(*WHITE_BRIGHT)}{label}: {RESET}"
@@ -314,7 +290,6 @@ def prompt_input(label: str) -> str:
         sys.exit(0)
 
 def render_token_card(token: str, user_data: dict = None, device_id: str = None, width: int = None):
-    """Render a showcase card presenting the retrieved token and extracted profile."""
     if width is None:
         width = get_term_width()
 
@@ -338,7 +313,6 @@ def render_token_card(token: str, user_data: dict = None, device_id: str = None,
     lines.append(f"{side_pad}{b_col}│{RESET}{' ' * pad_l}{title}{' ' * pad_r}{b_col}│{RESET}")
     lines.append(f"{side_pad}{b_col}├{'─' * (box_w - 2)}┤{RESET}")
 
-    # Profile Rows with sanitized strings to prevent multiline disruptions
     display_name = "Unknown"
     user_id = "N/A"
     email = "N/A"
@@ -375,8 +349,6 @@ def render_token_card(token: str, user_data: dict = None, device_id: str = None,
         lines.append(f"{side_pad}{b_col}│{RESET}{content}{' ' * pad}{b_col}│{RESET}")
 
     lines.append(f"{side_pad}{b_col}├{'─' * (box_w - 2)}┤{RESET}")
-
-    # Token Field Box
     token_label = f" {t_label}{'TOKEN':<10}{RESET} {b_col}│{RESET} "
     token_str = f"{t_tok}{BOLD}{token}{RESET}"
     token_plain = f" TOKEN      │ {token}"
@@ -399,7 +371,6 @@ def render_token_card(token: str, user_data: dict = None, device_id: str = None,
     print("\n".join(lines))
 
 def copy_to_clipboard(text: str) -> bool:
-    """Copy text to Windows clipboard natively using clip."""
     try:
         subprocess.run("clip", input=text.strip(), text=True, shell=True, check=True)
         return True
@@ -407,7 +378,6 @@ def copy_to_clipboard(text: str) -> bool:
         return False
 
 def save_token_to_file(token: str, user_data: dict = None, filepath: str = "token.txt"):
-    """Save token and timestamp to local file."""
     try:
         uname = user_data.get("username", "unknown") if user_data else "unknown"
         ts = time.strftime("%Y-%m-%d %H:%M:%S")
