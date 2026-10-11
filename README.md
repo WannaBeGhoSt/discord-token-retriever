@@ -22,12 +22,12 @@ A high-performance, stealth Discord account authentication and token retrieval t
   <img src="https://capsule-render.vercel.app/api?type=transparent&color=gradient&customColorList=00e5ff,00ffaa&height=60&section=header&text=⚡%20Features&fontSize=40&fontAlignY=35" alt="Features" />
 </div>
 
-- 🛡️ **Chrome 124 TLS / JA3 Impersonation** — Powered by `curl_cffi` to evade Akamai & Cloudflare network heuristics.
-- 🍪 **Automated DUID Cookie Seeding** — Automatically visits the login landing page to establish valid `__dcfduid`, `__sdcfduid`, and `_cfuvid` session cookies.
-- 🔬 **Science Telemetry & Experiment Pipeline** — Extracts experiments fingerprints and dispatches authentic `login_page_viewed` tracking events to satisfy Discord anti-bot checks.
-- 🔑 **Complete 2FA / TOTP Support** — Seamless handling of Multi-Factor Authentication tickets with clean code prompts.
-- 👤 **Instant Profile Metadata Extraction** — Automatically retrieves account details upon login (Global Display Name, Tag, ID, Verified Email, Phone Number, Nitro tier, 2FA status).
-- 💾 **Automatic Token Vault Logging** — Appends acquired tokens with timestamps into `token.txt`.
+- 🛡️ **Chrome 124 TLS / JA3 Impersonation** - Powered by `curl_cffi` to evade Akamai & Cloudflare network heuristics.
+- 🍪 **Automated DUID Cookie Seeding** - Automatically visits the login landing page to establish valid `__dcfduid`, `__sdcfduid`, and `_cfuvid` session cookies.
+- 🔬 **Science Telemetry & Experiment Pipeline** - Extracts experiments fingerprints and dispatches authentic `login_page_viewed` tracking events to satisfy Discord anti-bot checks.
+- 🔑 **Complete 2FA / TOTP Support** - Seamless handling of Multi-Factor Authentication tickets with clean code prompts.
+- 👤 **Instant Profile Metadata Extraction** - Automatically retrieves account details upon login (Global Display Name, Tag, ID, Verified Email, Phone Number, Nitro tier, 2FA status).
+- 💾 **Automatic Token Vault Logging** - Appends acquired tokens with timestamps into `token.txt`.
 
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=transparent&color=gradient&customColorList=b500ff,ff007f&height=60&section=header&text=🚀%20Setup%20and%20Installation&fontSize=40&fontAlignY=35" alt="Setup" />
